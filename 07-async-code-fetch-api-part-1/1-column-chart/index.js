@@ -100,15 +100,11 @@ export default class ColumnChart {
   }
 
   async update(from, to) {
-    const { header, body } = this.subElements;
-
     await this.loadData(from, to);
-
-    header.innerHTML = this.getChartValue();
-    body.innerHTML = this.getChartColumns();
   }
 
   async loadData(from = new Date(), to = new Date()) {
+    const { header, body } = this.subElements;
     const searchParams = new URLSearchParams({
       from: from.toISOString(),
       to: to.toISOString(),
@@ -121,6 +117,9 @@ export default class ColumnChart {
       const response = await fetchJson(`${BACKEND_URL}/${this.url}?${searchParams.toString()}`);
 
       this.data = Object.values(response);
+
+      header.innerHTML = this.getChartValue();
+      body.innerHTML = this.getChartColumns();
     } catch (error) {
       alert(error.message);
     } finally {
