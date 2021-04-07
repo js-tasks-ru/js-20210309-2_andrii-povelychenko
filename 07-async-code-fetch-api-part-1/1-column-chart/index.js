@@ -113,18 +113,13 @@ export default class ColumnChart {
     this.data = [];
     this.toggleLoading();
 
-    try {
-      const response = await fetchJson(`${BACKEND_URL}/${this.url}?${searchParams.toString()}`);
+    const response = await fetchJson(`${BACKEND_URL}/${this.url}?${searchParams.toString()}`);
+    this.data = Object.values(response);
 
-      this.data = Object.values(response);
+    this.toggleLoading();
 
-      header.innerHTML = this.getChartValue();
-      body.innerHTML = this.getChartColumns();
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      this.toggleLoading();
-    }
+    header.innerHTML = this.getChartValue();
+    body.innerHTML = this.getChartColumns();
   }
 
   remove () {
