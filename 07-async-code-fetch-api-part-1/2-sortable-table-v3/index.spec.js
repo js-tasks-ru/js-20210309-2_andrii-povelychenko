@@ -50,7 +50,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   let sortableTable;
 
   beforeEach(() => {
-    fetchMock.resetMocks();
+    fetchMock.mockResponseOnce(JSON.stringify(products));
 
     sortableTable = new SortableTable(headerConfig, {
       url: 'api/rest/products',
@@ -64,6 +64,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   });
 
   afterEach(() => {
+    fetchMock.resetMocks();
     sortableTable.destroy();
     sortableTable = null;
   });
@@ -82,9 +83,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   });
 
   it('should render loaded data correctly', async() => {
-    fetchMock.mockResponseOnce(JSON.stringify(products));
-
-    await sortableTable.render();
+    // await sortableTable.render();
 
     const { body } = sortableTable.subElements;
 
@@ -109,7 +108,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
 
     fetchMock.mockResponseOnce(JSON.stringify(bestsellers));
 
-    await sortableTable.render();
+    // await sortableTable.render();
 
     const [_, column2] = sortableTable.subElements.header.children;
     const spy = jest.spyOn(sortableTable, 'sortOnClient');
@@ -129,7 +128,7 @@ describe('async-code-fetch-api-part-1/sortable-table-v3', () => {
   it('should call "sortOnServer" for sorting on the server side', async() => {
     fetchMock.mockResponseOnce(JSON.stringify(products));
 
-    await sortableTable.render();
+    // await sortableTable.render();
 
     const [_, column2] = sortableTable.subElements.header.children;
     const spy = jest.spyOn(sortableTable, 'sortOnServer');
