@@ -33,7 +33,7 @@ export default class SortableTable {
     );
     const scrollBottomPosition = Math.ceil(window.pageYOffset + document.documentElement.clientHeight);
 
-    if (scrollBottomPosition === scrollHeight) {
+    if (scrollBottomPosition === scrollHeight && !this.isLoading && !this.isSortLocally) {
       this.start = this.start + this.step;
       await this.loadData(this.sorted.id, this.sorted.order);
     }
